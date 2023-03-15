@@ -1,0 +1,24 @@
+Table "user" {
+  "id" bigserial [pk, not null, increment]
+  "firstname" VARCHAR [not null]
+  "lastname" VARCHAR [not null]
+  "email" VARCHAR [unique, not null]
+  "password" VARCHAR [not null]
+  "phone" VARCHAR [not null]
+  "user_type" boolean [not null]
+  "created_at" timestamptz [not null, default: `now()`]
+  "updated_at" timestamptz
+}
+
+Table "sessions" {
+  "id" uuid [pk]
+  "userid" bigint [not null]
+  "refresh_token" varchar [not null]
+  "user_agent" varchar [not null]
+  "client_ip" varchar [not null]
+  "is_blocked" boolean [not null, default: false]
+  "expires_at" timestamptz [not null]
+  "created_at" timestamptz [not null, default: `now()`]
+}
+
+Ref:"user"."id" < "sessions"."userid"
